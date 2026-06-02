@@ -6,7 +6,7 @@ Eclat is a privacy-first financial email manager that runs entirely on your mach
 
 I built Eclat because I kept missing things that cost me money. A credit card reward quietly expiring. A free trial I forgot to cancel. A reimbursement deadline buried under 200 unread emails. The signals were always there — just invisible.
 
-Manually triaging an inbox is tedious, especially when you're sitting on 100+ unreads. And handing your inbox to a cloud AI tool felt like overkill for what should be a simple problem.
+Manually triaging an inbox is tedious, especially when you're sitting on 1000+ unreads. And handing your inbox to a cloud AI tool felt like overkill for what should be a simple problem.
 
 So I built a lightweight alternative. Eclat runs a two-agent AI pipeline entirely on your own machine: Agent 1 screens senders and subjects to filter out the noise, Agent 2 classifies the rest for financial signals — deadlines, perks, billing alerts, refunds, and more. Nothing leaves your device except the API call to the model of your choice. You get a clean, prioritized feed of what actually needs your attention, right inside Gmail.
 
