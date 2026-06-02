@@ -24,12 +24,11 @@ classification_feedback.json
 gold_standard_failures.json
 user_settings.json
 
+# Web dashboard (not part of the extension product)
+frontend/
+
 # Dependencies
 node_modules/
-frontend/node_modules/
-
-# Build output
-frontend/dist/
 
 # OS
 .DS_Store
