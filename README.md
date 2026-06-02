@@ -4,71 +4,109 @@ Eclat is a privacy-first financial email manager that runs entirely on your mach
 
 ## Overview
 
-I built Eclat because I kept missing things that cost me money. A credit card reward quietly expiring. A free trial I forgot to cancel. A reimbursement deadline buried under 200 unread emails. The signals were always there — just invisible.  
-Manually triaging an inbox is tedious, especially when you're sitting on 100+ unreads. And handing your inbox to a cloud AI tool felt like overkill for what should be a simple problem.  
+I built Eclat because I kept missing things that cost me money. A credit card reward quietly expiring. A free trial I forgot to cancel. A reimbursement deadline buried under 200 unread emails. The signals were always there — just invisible.
+
+Manually triaging an inbox is tedious, especially when you're sitting on 100+ unreads. And handing your inbox to a cloud AI tool felt like overkill for what should be a simple problem.
+
 So I built a lightweight alternative. Eclat runs a two-agent AI pipeline entirely on your own machine: Agent 1 screens senders and subjects to filter out the noise, Agent 2 classifies the rest for financial signals — deadlines, perks, billing alerts, refunds, and more. Nothing leaves your device except the API call to the model of your choice. You get a clean, prioritized feed of what actually needs your attention, right inside Gmail.
 
 While building this, I caught my ClassPass trial one day before it renewed — and dug up a Robinhood Gold subscription I'd completely forgotten about.
 
 ## Features
 
-🔒 Privacy & Security: Your API keys are stored locally in your browser's extension storage (chrome.storage). They are sent directly from your machine to the respective AI provider (Google/Anthropic) to handle your requests. Your keys are never collected, shared, or sent to any external servers.
+🔒 **Privacy first:** Your API keys never leave your device. They go directly from your machine to Google or Anthropic — Eclat never sees them.
 
-| Feature Module | Description |
+| Feature | Description |
 | :---- | :---- |
-| Model Selection | Switch between Gemini 2.5 Flash and Claude Haiku — each uses its own API key and model ID. |
+| Model Selection | Choose between Gemini 2.5 Flash or Claude Haiku as your AI. |
 | Open Source & Free | 100% open-source and free to use. |
-| Pick Date  | Select a date range to classify emails from that period. |
-| Generation History | Browse all previously classified emails and their detected financial signals. |
-| Configure Exclusion | Skip emails from senders you don't want processed, keeping your results focused and efficient. |
+| Pick Date | Scan emails from a specific date range. |
+| History | Browse all previous scans and their results. |
+| Exclude Senders | Skip emails from senders you don't care about. |
+
+## What you'll need before starting
+
+- **Node.js** — download at [nodejs.org](https://nodejs.org/) (choose the LTS version)
+- **Google Chrome**
+- A **Gemini** or **Claude** API key (you'll set this up inside the extension — no config file needed)
+- A **Gmail account** you want to scan
 
 ## Installation
 
-⚠️ **Note on Gmail Authorization:** Eclat is currently pending Google's OAuth verification. Until approved, you'll need to create your own Google Cloud project and OAuth credentials to connect your Gmail account. Full setup instructions [here](#gmail-setup).
+> ⚠️ **Note:** Eclat is pending Google's OAuth verification. Setting up Gmail access requires a few extra steps for now — see [Gmail Setup](#gmail-setup) below.
 
-1. Clone the repository
+**Step 1 — Download the project**
+
+Click the green **Code** button on this page → **Download ZIP** → unzip it somewhere on your computer.
+
+Or if you use Git:
 ```bash
 git clone https://github.com/chloejingeyao/Eclat-financial-email-AI-manager.git
 cd Eclat-financial-email-AI-manager
 ```
 
-2. Install dependencies
+**Step 2 — Install packages**
+
+Open Terminal, navigate to the project folder, and run:
 ```bash
 npm install
 ```
 
-3. Connect your Gmail account — [see Gmail Setup](#gmail-setup)
+**Step 3 — Connect your Gmail account**
 
-4. Start the local server
+Follow the [Gmail Setup](#gmail-setup) steps below, then come back here.
+
+**Step 4 — Start the server**
+
+In Terminal, run:
 ```bash
 npm run server
 ```
 
-5. Load the Chrome extension
-   - Navigate to `chrome://extensions/`
-   - Toggle on **Developer mode** (top-right)
-   - Click **Load unpacked** → select the `extension/` folder
+Keep this window open while using the extension — it's what powers the AI scanning in the background.
 
-6. Add your AI API key
-   - Open the Eclat extension → **Settings** tab
-   - Paste your Gemini or Claude API key
+**Step 5 — Load the extension into Chrome**
+
+1. Open Chrome and go to `chrome://extensions/`
+2. Turn on **Developer mode** using the toggle in the top-right corner
+3. Click **Load unpacked**
+4. Select the `extension` folder inside the project
+
+**Step 6 — Add your AI API key**
+
+1. Click the Eclat icon in your Chrome toolbar
+2. Go to the **Settings** tab
+3. Paste in your Gemini or Claude API key
+
+You're ready to scan.
+
+---
 
 ## Gmail Setup
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/) and create a new project
-2. Enable the **Gmail API** for your project
-3. Go to **APIs & Services → Credentials → Create Credentials → OAuth 2.0 Client ID**
-4. Set application type to **Desktop App**
-5. Copy the **Client ID** and **Client Secret**
-6. In the project root, copy `.env.example` to `.env` and fill in your credentials:
+This is a one-time process to give Eclat permission to read your Gmail.
+
+1. Go to [console.cloud.google.com](https://console.cloud.google.com/) and sign in with your Google account
+2. Click **Select a project** at the top → **New Project** → give it any name → **Create**
+3. In the search bar, search for **Gmail API** → click it → click **Enable**
+4. Go to **APIs & Services → Credentials** → click **Create Credentials** → choose **OAuth 2.0 Client ID**
+5. If prompted to configure the consent screen, choose **External** → fill in any app name → save
+6. Set application type to **Desktop App** → click **Create**
+7. Copy the **Client ID** and **Client Secret** shown on screen
+8. In the project folder, create a new file named `.env` and paste in:
 ```
-GOOGLE_CLIENT_ID=your_client_id
-GOOGLE_CLIENT_SECRET=your_client_secret
+GOOGLE_CLIENT_ID=paste_your_client_id_here
+GOOGLE_CLIENT_SECRET=paste_your_client_secret_here
+GOOGLE_REDIRECT_URI=http://localhost:3000/oauth2callback
+PORT=3001
 ```
-7. Run the auth flow — a browser window will open to sign in with Gmail:
+9. In Terminal, run:
 ```bash
 npm run auth
 ```
+A browser window will open — sign in with Gmail and click **Allow**. Done.
+
+---
 
 ## Contact
 
