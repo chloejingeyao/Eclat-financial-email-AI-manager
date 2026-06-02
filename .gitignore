@@ -1,0 +1,35 @@
+# Environment & secrets — NEVER commit these
+.env
+token.json
+
+# Claude Code local config (contains command history)
+.claude/
+
+# Debug scripts
+debug_reasoning.mjs
+debug_reasoning2.mjs
+
+# Internal planning docs
+Frontend_design_skill.md
+Requirements.md
+
+# Local backup
+backup/
+
+# User data — personal email content and API keys
+raw_emails.json
+processed_emails.json
+scan_history.json
+classification_feedback.json
+gold_standard_failures.json
+user_settings.json
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+
+# OS
+.DS_Store
